@@ -1,0 +1,15 @@
+// Import Bootstrap CSS
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    background-color: EEEEEE;
+}
+
+// mettre une largeur max pour la navbar
+// reduire de 25% la largeur de la navbar
+
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

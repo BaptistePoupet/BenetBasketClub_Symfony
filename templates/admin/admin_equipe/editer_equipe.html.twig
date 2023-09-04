@@ -1,0 +1,24 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block contenu %}
+
+    {{ form_start(form) }}
+        <div class="col-4">
+            {{ form_row(form.nom) }}
+        </div>
+        <div class="col-4">
+             {{ form_row(form.nombreJoueurs) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.entraineur) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.coach) }}
+        </div>
+        {# faire un flash #}
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary">Ajouter une équipe</button>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

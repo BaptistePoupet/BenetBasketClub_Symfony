@@ -1,0 +1,35 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block title %}Hello AdminactualiteController!{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">{{app.request.get('_route') == "app_admin_actualite_ajouter"? '':''}} Voici les actualites</h1>
+    <table class="table">
+        <tread>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Photo</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </tread>
+        <tbody>
+            {% for actualite in actualites %}
+                <tr>
+                    <td>{{ actualite.id }}</td>
+                    <td>{{ actualite.titre }}</td>
+                    <td>{{ actualite.date.format('d/m/Y') }}</td>
+                    <td>{{ actualite.photo}}</td>
+                    <td>{{ actualite.description }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('admin_actualite_mdofier', {id: actualite.id})}}">Modifier</a>
+                        <a class="btn btn-danger" onclick="return confirm ('Voulez-vous supprmier votre actualite?')"href="{{ path('admin_actualite_supprimer', {id: actualite.id})}}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
