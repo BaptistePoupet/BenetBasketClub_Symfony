@@ -20,68 +20,73 @@ class AdminActualiteController extends AbstractController
             'controller_name' => 'AdminActualiteController',
         ]);
     }
-    
-    #[Route('/ajouter', name: 'admin_home')]
+
+    #[Route('/admin/actualite/ajouter', name: 'admin_actualite_ajouter')]
     public function ajouter(): Response
     {
         return $this->render('admin/actu.html.twig', [
             'controller_name' => 'Benet Basket Club',
         ]);
     }
-    
-    #[Route('/admin/actualite', name: 'admin_actualite_lister')]
+
+    #[Route('/admin/actualite/lister', name: 'admin_actualite_lister')]
     public function lister(ActualiteRepository $actualiteRepository): Response
     {
         $actualites = $actualiteRepository->findAll();
-        
+
         return $this->render('admin/admin_actualite/index.html.twig', [
-            'actualites' => $actualites
+            'actualites' => $actualites,
         ]);
     }
-    
-    #[Route('/admin/actualite/ajouter', name: 'admin_actalite_ajouter')]
-    #[Route('/admin//modifier/{id}', name: 'admin_actualite_mdofier')]
-    
-    public function editer(Request $request, 
-                            EntityManagerInterface $entityManagerInterface,  
-                            actualiteRepository $actualiteRepository,
-                            int $id = null): Response
-    {
-        if ($id == null){
-            $actualite = new actualite();
-        }else{
+
+    #[Route('/admin/actualite/editer/{id}', name: 'admin_actualite_editer')]
+    public function editer(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ActualiteRepository $actualiteRepository,
+        int $id = null
+    ): Response {
+        if ($id === null) {
+            $actualite = new Actualite();
+        } else {
             $actualite = $actualiteRepository->find($id);
         }
-        
-        $actualite = new actualite();
-        $form = $this->createForm(actualiteType::class, $actualite);
+
+        $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
-        // si le form est soumis et valide
-        if($form->isSubmitted() && $form->isValid()){
-           
-            // traitement des données
-            $entityManagerInterface->persist($actualite);
-            $entityManagerInterface->flush();
-            
-            //messages flash
-            $this->addFlash('success', 'L actualite a bien été enregistré');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Vous devez gérer l'enregistrement de l'actualité ici
+            // $entityManager->persist($actualite);
+            // $entityManager->flush();
+
+            $this->addFlash('success', 'L\'actualité a bien été enregistrée');
 
             return $this->redirectToRoute('admin_actualite_lister');
-        
         }
 
         return $this->render('admin/admin_actualite/editer_actualite.html.twig', [
-            'form' => $form
+            'form' => $form->createView(),
+            'actualite' => $actualite,
         ]);
     }
+
     #[Route('/admin/actualite/supprimer/{id}', name: 'admin_actualite_supprimer')]
-    public function supprimer(EntityManagerInterface $entityManagerInterface,
-                                actualiteRepository $actualiteRepository,
-                                int $id): Response
-    {
+    public function supprimer(
+        EntityManagerInterface $entityManager,
+        ActualiteRepository $actualiteRepository,
+        int $id
+    ): Response {
         $actualite = $actualiteRepository->find($id);
-        $entityManagerInterface->remove($actualite);
-        $entityManagerInterface->flush();
+
+        if (!$actualite) {
+            throw $this->createNotFoundException('L\'actualité n\'existe pas.');
+        }
+
+        $entityManager->remove($actualite);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'L\'actualité a bien été supprimée');
 
         return $this->redirectToRoute('admin_actualite_lister');
     }
