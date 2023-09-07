@@ -18,8 +18,8 @@ security:
             provider: app_user_provider
 
             form_login:
-                login_path: app_login
-                check_path: app_login
+                login_path: app_user
+                check_path: app_user
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -37,6 +37,9 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/actualite, roles: ROLE_ACTUALITE }
+        - { path: ^/equipe, roles: ROLE_EQUIPE }
+
 
 when@test:
     security:
