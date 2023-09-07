@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><text y='1.2em' font-size='96'>⚫️</text></svg>">
+    
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-        {#Menu de font noir et et te texte blanc#}
-        <navbar class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="navbar-brand mr-auto nav" href="{{ path('app_main') }}">Benet Basket Club</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('admin_equipe') }}">Equipe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Boutique</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Le Club</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sponsors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="navbar-brand mr-auto nav" href="#">Profils</a>
-                </li>
-            </ul>
-        </navbar>
-        </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <!-- Menu avec fond noir et texte blanc -->
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="navbar-brand mr-auto nav-link" href="{{ path('app_main') }}">Benet Basket Club</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_equipe') }}">Equipe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Le Club</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sponsors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="navbar-brand mr-auto nav-link" href="">Profils</a>
+            </li>
+        </ul>
+    </nav>
+
+    {% block body %}{% endblock %}
+
     <footer class="bg-dark text-white text-center py-3">
         <div class="container">
             <div class="row">
@@ -61,5 +62,6 @@
             </div>
         </div>
     </footer>
-
+</body>
 </html>
+s

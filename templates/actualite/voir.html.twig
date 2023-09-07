@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{%  block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('actualite') }}
+{% endblock %}
+{% block contenu %}
+        
+    {#faire le lien direct avec un actualite dans la BDD#}
+    <h1>{{actualite.nom}}</h1>
+    <p>{{actualite.description}}</p>
+    <p>{{actualite.prix}}</p>
+
+    {#}
+    <a href="{{path('admin_actualite_index')}}">Retour à la liste</a>
+    <a href="{{path('admin_actualite_edit', {'id': actualite.id})}}">Modifier</a>
+    <a href="{{path('admin_actualite_delete', {'id': actualite.id})}}">Supprimer</a>#}
+
+{% endblock %}
