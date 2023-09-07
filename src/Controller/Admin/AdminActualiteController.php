@@ -7,29 +7,16 @@ use App\Form\ActualiteType;
 use App\Repository\ActualiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminActualiteController extends AbstractController
 {
-    #[Route('/admin/actualite', name: 'app_admin_actualite')]
-    public function index(): Response
-    {
-        return $this->render('admin/admin_actualite/index.html.twig', [
-            'controller_name' => 'AdminActualiteController',
-        ]);
-    }
-
-    #[Route('/admin/actualite/ajouter', name: 'admin_actualite_ajouter')]
-    public function ajouter(): Response
-    {
-        return $this->render('admin/actu.html.twig', [
-            'controller_name' => 'Benet Basket Club',
-        ]);
-    }
-
-    #[Route('/admin/actualite/lister', name: 'admin_actualite_lister')]
+    #[Route('/admin/actualite', name: 'admin_actualite_lister')]
     public function lister(ActualiteRepository $actualiteRepository): Response
     {
         $actualites = $actualiteRepository->findAll();
@@ -39,11 +26,13 @@ class AdminActualiteController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/actualite/editer/{id}', name: 'admin_actualite_editer')]
+    #[Route('/admin/actualite/ajouter', name: 'admin_actualite_ajouter')]
+    #[Route('/admin/actualite/modifier/{id}', name: 'admin_actualite_modifier')]
     public function editer(
         Request $request,
         EntityManagerInterface $entityManager,
         ActualiteRepository $actualiteRepository,
+        SluggerInterface $slugger,
         int $id = null
     ): Response {
         if ($id === null) {
@@ -56,11 +45,29 @@ class AdminActualiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Vous devez gérer l'enregistrement de l'actualité ici
-            // $entityManager->persist($actualite);
-            // $entityManager->flush();
+            $photoFile = $form->get('photoPrincipal')->getData();
+            
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
-            $this->addFlash('success', 'L\'actualité a bien été enregistrée');
+                try {
+                    $photoFile->move(
+                        $this->getParameter('actualite_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gérer les erreurs de téléchargement ici
+                }
+
+                $actualite->setPhotoPrincipal($newFilename);
+            }
+
+            $entityManager->persist($actualite);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le actualite a actualite été enregistré');
 
             return $this->redirectToRoute('admin_actualite_lister');
         }
@@ -79,14 +86,14 @@ class AdminActualiteController extends AbstractController
     ): Response {
         $actualite = $actualiteRepository->find($id);
 
-        if (!$actualite) {
-            throw $this->createNotFoundException('L\'actualité n\'existe pas.');
+        if ($actualite) {
+            $entityManager->remove($actualite);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le actualite a actualite été supprimé');
+        } else {
+            $this->addFlash('error', 'Le actualite n\'existe pas');
         }
-
-        $entityManager->remove($actualite);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'L\'actualité a bien été supprimée');
 
         return $this->redirectToRoute('admin_actualite_lister');
     }
