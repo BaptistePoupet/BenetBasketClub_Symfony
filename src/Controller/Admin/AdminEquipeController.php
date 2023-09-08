@@ -16,6 +16,17 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminEquipeController extends AbstractController
 {
+    public function lister(EquipeRepository $EquipeRepository): Response
+    {
+        $equipes = $equipeRepository->findBy(
+            [
+                'coach' => $this->getUser()
+            ]);
+
+        return $this->render('admin/admin_equipe/index.html.twig', [
+            'equipes' => $equipes,
+        ]);
+    }
     #[Route('/admin/admin/equipe', name: 'admin_equipe')]
     public function index(): Response
     {

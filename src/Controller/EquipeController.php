@@ -17,10 +17,10 @@ class EquipeController extends AbstractController
 {
     #[Route('/equipe', name: 'app_equipe')]
     public function index(EquipeRepository $equipeRepository): Response
-    {
-        return $this->render('equipe/index.html.twig', [
-            'equipes' => $equipeRepository->findAll(),
-        ]);
+    {    
+        $equipes = $equipeRepository->findAll();
+        return $this->render('equipe/index.html.twig', 
+            ['equipes' => $equipes]);
     }
 
     #[Route('/equipe/{id}', name: 'equipe_voir', requirements: ['id' => '\d+'])]

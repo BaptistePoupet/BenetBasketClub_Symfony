@@ -1,31 +1,5 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {# Affiche un titre #}
-    <div><h1>Equipes</h1></div>
-
-    <div class="row">
-        {% for equipe in equipes %}
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        {# Utilisez le formulaire EquipeType pour afficher les détails de l'équipe #}
-                        {{ form_start(equipe.form) }}
-                        <p class="card-text">{{ form_row(equipe.form.nom) }}</p>
-                        <p class="card-text">{{ form_row(equipe.form.nombreJoueurs) }}</p>
-                        <p class="card-text">{{ form_row(equipe.form.entraineur) }}</p>
-                        <p class="card-text">{{ form_row(equipe.form.coach) }}</p>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">Voir</button>
-                                <a href="{{ path('team_edit', {'id': equipe.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
-                            </div>
-                        </div>
-                        {{ form_end(equipe.form) }}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    
 {% endblock %}
