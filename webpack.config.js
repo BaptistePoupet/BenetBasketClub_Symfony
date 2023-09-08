@@ -24,6 +24,8 @@ Encore
     .addEntry('main', './assets/main.js')
     .addEntry('admin', './assets/admin.js')
     .addEntry('equipe', './assets/equipe.js')
+    .addEntry('contact', './assets/contact.js')
+
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

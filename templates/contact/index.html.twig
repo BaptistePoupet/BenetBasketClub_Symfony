@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContactController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/Users/bpoupet2022/BenetBasketClub_Symfony/src/Controller/ContactController.php'|file_link(0) }}">src/Controller/ContactController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/Users/bpoupet2022/BenetBasketClub_Symfony/templates/contact/index.html.twig'|file_link(0) }}">templates/contact/index.html.twig</a></code></li>
+    </ul>
+</div>
+{# cree un formulaire de contact, ou il y a nom, prenom, adresse mail, description#}
+<div>
+    <form action="" method="post">
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom">
+        </div>
+        <div>
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom">
+        </div>
+        <div>
+            <label for="mail">Adresse mail</label>
+            <input type="text" id="mail" name="mail">
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div>
+            <button type="submit">Envoyer</button>
+        </div>
+    </form>
+{% endblock %}

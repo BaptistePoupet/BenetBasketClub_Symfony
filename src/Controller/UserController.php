@@ -72,5 +72,30 @@ class UserController extends AbstractController
         ]);
     }
 
-    // ... autres méthodes du contrôleur
+    /**
+     * @Route("/inscription", name="inscription")
+     */
+    public function inscription(Request $request)
+    {
+        // Créez une instance de l'entité User
+        $user = new User();
+
+        // Créez le formulaire d'inscription
+        $form = $this->createForm(InscriptionType::class, $user);
+
+        // Gérez la soumission du formulaire
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrez l'utilisateur dans la base de données (code nécessaire ici)
+
+            // Passez les données de l'utilisateur au template
+            return $this->render('votre_template.html.twig', [
+                'user' => $user, // 'user' est le nom de la variable que vous utiliserez dans le template
+            ]);
+        }
+
+        return $this->render('votre_formulaire.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
